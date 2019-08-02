@@ -59,21 +59,7 @@ int main()
     int size, cho;
     cout<<"Enter the size of the stack : ";
     cin>>size;
-    cout<<"Choose the data type of the stack : \n1)Integer.\n2)Double.\n3)String.\nEnter your choice : ";
-    cin>>cho;
     Stack<int> st(size);
-    if(cho==1)
-    {
-        Stack<int> st(size);
-    }
-    else if(cho==2)
-    {
-        Stack<double> st(size);
-    }
-    else if(cho==3)
-    {
-        Stack<string> st(size);
-    }
     
     do
     {
@@ -97,6 +83,7 @@ int main()
                 cout<<"Enter a valid choice."<<endl;
                 break;
         }
+        cout<<"-------------------------------"<<endl;
     }while(flag);
     cout<<"-----------End of Program----------"<<endl;
 }
