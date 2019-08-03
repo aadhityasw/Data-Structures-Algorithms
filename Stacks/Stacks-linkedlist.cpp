@@ -1,52 +1,62 @@
-#include <iostream>
+#include<iostream>
 using namespace std;
+
+template<class temp>
+class Node
+{
+    public :
+        temp data;
+        Node<temp> *next;
+};
 
 template<class temp>
 class Stack
 {
     public :
-        int size, top;
-        temp *arr;
-        Stack(int s)
+        Node<temp> *start, *node;
+        Stack()
         {
-            size = s;
-            top = -1;
-            arr = new temp[size];
+            start = new Node<temp>();
+            node = new Node<temp>();
+            start->next = NULL;
         }
+
         void push()
         {
             temp ele;
             cout<<"Enter the element to be inserted : ";
             cin>>ele;
-            if(top==size-1)
-            {
-                cout<<"Overflow"<<endl;
-            }
-            else
-            {
-                arr[++top] = ele;
-            }
+            node = new Node<temp>();
+            node->data = ele;
+            node->next = start;
+            start = node;
         }
+
         void pop()
         {
-            if(top==-1)
+            if(start == NULL)
             {
-                cout<<"Underflow"<<endl;
+                cout<<"The Stack is empty."<<endl;
             }
             else
             {
                 temp ele;
-                ele = arr[top--];
-                cout<<"The deleted element is : "<<ele<<endl;
+                ele = start->data;
+                start = start->next;
+                cout<<"The talen element is : "<<ele<<endl; 
             }
+            
         }
+
         void traverse()
         {
-            int i;
-            cout<<"The elements in the stack are : "<<endl;
-            for(i=top;i>=0;i--)
+            node = new Node<temp>();
+            node = start;
+            cout<<"The traversal of the stack is : ";
+            while(node->next!=NULL)
             {
-                cout<<arr[i]<<"\t";
+                cout<<node->data<<"\t";
+                node = node->next;
             }
             cout<<endl;
         }
@@ -56,11 +66,8 @@ int main()
 {
     cout<<"-----------Welcome to Stacks----------"<<endl;
     bool flag = true;
-    int size, cho;
-    cout<<"Enter the size of the stack : ";
-    cin>>size;
-    Stack<int> st(size);
-    
+    int cho;
+    Stack<int> st;
     do
     {
         cout<<"Options avalible are : \n1)Push an element into stack.\n2)Pop an element from a stack.\n3)Print all the elements in the stack.\n4)Exit."<<endl;
