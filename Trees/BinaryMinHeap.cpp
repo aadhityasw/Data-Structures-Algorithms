@@ -61,7 +61,7 @@ class BinaryMinHeap
             {
                 smallest = l;
             }
-            if(r>=0 && r<size && arr[r]<arr[i])
+            if(r>=0 && r<size && arr[r]<arr[smallest])
             {
                 smallest = r;
             }

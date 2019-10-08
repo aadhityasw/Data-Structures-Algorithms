@@ -64,7 +64,7 @@ class BinaryMaxHeap
             {
                 largest = i;
             }
-            if(r>=0 && r<size && arr[r]>arr[i])
+            if(r>=0 && r<size && arr[r]>arr[largest])
             {
                 largest = r;
             }
