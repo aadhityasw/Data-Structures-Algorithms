@@ -1,4 +1,4 @@
-// NonDirectional Unweighted Graph
+// Directional Unweighted Graph
 #include<iostream>
 using namespace std;
 
@@ -57,7 +57,7 @@ class Graph
             bool f1, f2;
             for(int i=0;i<numEdges;i++)
             {
-                cout<<(i+1)<<") Enter the name of the nodes in edge : ";
+                cout<<(i+1)<<") Enter the name of the source and destination nodes in edge : ";
                 cin>>s1>>s2;
                 f1 = false;
                 f2 = false;
@@ -72,7 +72,6 @@ class Graph
                         }
                         if(!(f2) && nodeList[j].name==s2)
                         {
-                            nodeList[j].insertAdjascentNode(s1);
                             f2 = true;
                         }
                     }
@@ -89,7 +88,6 @@ class Graph
                         Node<tempName> new_node;
                         new_node.name = s2;
                         nodeList[n] = new_node;
-                        nodeList[n].insertAdjascentNode(s1);
                         n++;
                     }
                 }
@@ -105,7 +103,7 @@ class Graph
             bool flag, flag2;
             for(int i=0;i<numNodes;i++)
             {
-                cout<<(i+1)<<") Enter the name of the node : ";
+                cout<<(i+1)<<") Enter the name of the source node : ";
                 cin>>s1;
                 flag = true;
                 pos = 0;
@@ -126,9 +124,9 @@ class Graph
                     pos = n;
                     n++;
                 }
-                cout<<"Enter the number of adjascent nodes to "<<s1<<" : ";
+                cout<<"Enter the number of destination nodes from "<<s1<<" : ";
                 cin>>numAdj;
-                cout<<"Enter the adjascent nodes one by one : "<<endl;
+                cout<<"Enter the destination nodes one by one : "<<endl;
                 for(j=0;j<numAdj;j++)
                 {
                     cin>>s2;

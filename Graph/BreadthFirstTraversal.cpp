@@ -1,6 +1,53 @@
-// NonDirectional Unweighted Graph
+// Breadth First Traversal of a Directional Unweighted Graph
 #include<iostream>
 using namespace std;
+
+template<class temp>
+class Queue
+{
+    public :
+        int size, front, rear;
+        temp *arr;
+
+        Queue()
+        {
+            size = 50;
+            front = 0;
+            rear = -1;
+            arr = new temp[size];
+        }
+
+        void enqueue(temp ele)
+        {
+            arr[++rear] = ele;
+        }
+
+        temp dequeue()
+        {
+            temp ele;
+            ele = arr[front++];
+            return(ele);
+        }
+
+        bool isEmpty()
+        {
+            if(rear == -1 || front == rear+1)
+            {
+                return(true);
+            }
+            return(false);
+        }
+
+        bool isFull()
+        {
+            if(rear == size-1)
+            {
+                return(true);
+            }
+            return(false);
+        }
+};
+
 
 template<class tempName>
 class Node
@@ -34,6 +81,7 @@ class Node
         }
 };
 
+
 template<class tempName>
 class Graph
 {
@@ -57,7 +105,7 @@ class Graph
             bool f1, f2;
             for(int i=0;i<numEdges;i++)
             {
-                cout<<(i+1)<<") Enter the name of the nodes in edge : ";
+                cout<<(i+1)<<") Enter the name of the source and destination nodes in edge : ";
                 cin>>s1>>s2;
                 f1 = false;
                 f2 = false;
@@ -72,7 +120,6 @@ class Graph
                         }
                         if(!(f2) && nodeList[j].name==s2)
                         {
-                            nodeList[j].insertAdjascentNode(s1);
                             f2 = true;
                         }
                     }
@@ -89,67 +136,7 @@ class Graph
                         Node<tempName> new_node;
                         new_node.name = s2;
                         nodeList[n] = new_node;
-                        nodeList[n].insertAdjascentNode(s1);
                         n++;
-                    }
-                }
-            }
-        }
-
-        void getInputByAdjacency()
-        {
-            int numNodes, numAdj, pos, j;
-            cout<<"Enter the total number of nodes in the graph : ";
-            cin>>numNodes;
-            tempName s1, s2;
-            bool flag, flag2;
-            for(int i=0;i<numNodes;i++)
-            {
-                cout<<(i+1)<<") Enter the name of the node : ";
-                cin>>s1;
-                flag = true;
-                pos = 0;
-                for(j=0;j<n;j++)
-                {
-                    if(nodeList[j].name == s1)
-                    {
-                        pos = j;
-                        flag = false;
-                        break;
-                    }
-                }
-                if(flag)
-                {
-                    Node<tempName> new_node;
-                    new_node.name = s1;
-                    nodeList[n] = new_node;
-                    pos = n;
-                    n++;
-                }
-                cout<<"Enter the number of adjascent nodes to "<<s1<<" : ";
-                cin>>numAdj;
-                cout<<"Enter the adjascent nodes one by one : "<<endl;
-                for(j=0;j<numAdj;j++)
-                {
-                    cin>>s2;
-                    if(s2!=s1)
-                    {
-                        nodeList[pos].insertAdjascentNode(s2);
-                        flag2 = false;
-                        for(int k=0;k<n;k++)
-                        {
-                            if(nodeList[k].name == s2)
-                            {
-                                flag2 = true;
-                            }
-                        }
-                        if(flag2 == false)
-                        {
-                            Node<tempName> new_node;
-                            new_node.name = s2;
-                            nodeList[n] = new_node;
-                            n++;
-                        }
                     }
                 }
             }
@@ -181,26 +168,74 @@ int main()
 {
     typedef int tempName;
     Graph<tempName> graph;
-    int cho;
+
     cout<<"-------------------------------------------------------------------------------------------------"<<endl;
     cout<<"Welcome"<<endl;
     cout<<"-------------------------------------------------------------------------------------------------"<<endl;
-    cout<<"Make a choice : "<<endl;;
-    cout<<"Enter 1 to insert by edges. \nEnter 2 to insert by adjascency list."<<endl;
-    cout<<"Enter your choice : ";
-    cin>>cho;
     
-    switch(cho)
-    {
-        case 1 :
-            graph.getInputByEdges();
-            break;
-        case 2 :
-            graph.getInputByAdjacency();
-            break;
-    }
+    graph.getInputByEdges();
 
     cout<<"-------------------------------------------------------------------------------------------------"<<endl;
     graph.printGraph();
+    cout<<"-------------------------------------------------------------------------------------------------"<<endl;
+
+    tempName src;
+    cout<<"Enter the source node : ";
+    cin>>src;
+
+    Queue<tempName> queue;
+    queue.enqueue(src);
+    tempName ele;
+
+    tempName* visited = new tempName[20];
+    int i, j, n = 0, pos;
+    bool flag1, flag2;
+
+    cout<<"The Breadth First Traversal of the graph from "<<src<<" is : ";
+    while(!queue.isEmpty())
+    {
+        ele = queue.dequeue();
+        flag1 = true;
+        for(i=0;i<n;i++)
+        {
+            if(visited[i] == ele)
+            {
+                flag1 = false;
+                break;
+            }
+        }
+        if(flag1 == true)
+        {
+            cout<<ele<<"    ";
+            pos = 0;
+            visited[n] = ele;
+            n++;
+            for(i=0;i<graph.n;i++)
+            {
+                if(graph.nodeList[i].name == ele)
+                {
+                    pos = i;
+                    break;
+                }
+            }
+            for(i=0;i<graph.nodeList[pos].n;i++)
+            {
+                flag2 = true;
+                for(j=0;j<n;j++)
+                {
+                    if(visited[j] == graph.nodeList[pos].adj[i])
+                    {
+                        flag2 = false;
+                        break;
+                    }
+                }
+                if(flag2 == true)
+                {
+                    queue.enqueue(graph.nodeList[pos].adj[i]);
+                }
+            }
+        }
+    }
+    cout<<endl;
     cout<<"-------------------------------------------------------------------------------------------------"<<endl;
 }

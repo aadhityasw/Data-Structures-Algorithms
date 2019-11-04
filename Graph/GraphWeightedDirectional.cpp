@@ -1,4 +1,4 @@
-// NonDirectional Unweighted Graph
+// Directional Weighted Graph
 #include<iostream>
 using namespace std;
 
@@ -8,14 +8,16 @@ class Node
     public :
         tempName name;
         tempName *adj;
+        int *weights;
         int n;
         Node()
         {
             adj = new tempName[20];
+            weights = new int[20];
             n=0;
         }
 
-        void insertAdjascentNode(tempName ins_node)
+        void insertAdjascentNode(tempName ins_node, int ins_weight)
         {
             bool flag = true;
             for(int i=0;i<n;i++)
@@ -29,6 +31,7 @@ class Node
             if(flag)
             {
                 adj[n] = ins_node;
+                weights[n] = ins_weight;
                 n++;
             }
         }
@@ -49,7 +52,7 @@ class Graph
 
         void getInputByEdges()
         {
-            int numEdges;
+            int numEdges, weight;
             cout<<"Enter the number of edges in the graph : ";
             cin>>numEdges;
             tempName s1;
@@ -57,8 +60,8 @@ class Graph
             bool f1, f2;
             for(int i=0;i<numEdges;i++)
             {
-                cout<<(i+1)<<") Enter the name of the nodes in edge : ";
-                cin>>s1>>s2;
+                cout<<(i+1)<<") Enter the name of the source, destination nodes in edge and its weight : ";
+                cin>>s1>>s2>>weight;
                 f1 = false;
                 f2 = false;
                 if(s1!=s2)
@@ -67,12 +70,11 @@ class Graph
                     {
                         if(!(f1) && nodeList[j].name==s1)
                         {
-                            nodeList[j].insertAdjascentNode(s2);
+                            nodeList[j].insertAdjascentNode(s2, weight);
                             f1 = true;
                         }
                         if(!(f2) && nodeList[j].name==s2)
                         {
-                            nodeList[j].insertAdjascentNode(s1);
                             f2 = true;
                         }
                     }
@@ -81,7 +83,7 @@ class Graph
                         Node<tempName> new_node;
                         new_node.name = s1;
                         nodeList[n] = new_node;
-                        nodeList[n].insertAdjascentNode(s2);
+                        nodeList[n].insertAdjascentNode(s2, weight);
                         n++;
                     }
                     if(f2 == false)
@@ -89,67 +91,7 @@ class Graph
                         Node<tempName> new_node;
                         new_node.name = s2;
                         nodeList[n] = new_node;
-                        nodeList[n].insertAdjascentNode(s1);
                         n++;
-                    }
-                }
-            }
-        }
-
-        void getInputByAdjacency()
-        {
-            int numNodes, numAdj, pos, j;
-            cout<<"Enter the total number of nodes in the graph : ";
-            cin>>numNodes;
-            tempName s1, s2;
-            bool flag, flag2;
-            for(int i=0;i<numNodes;i++)
-            {
-                cout<<(i+1)<<") Enter the name of the node : ";
-                cin>>s1;
-                flag = true;
-                pos = 0;
-                for(j=0;j<n;j++)
-                {
-                    if(nodeList[j].name == s1)
-                    {
-                        pos = j;
-                        flag = false;
-                        break;
-                    }
-                }
-                if(flag)
-                {
-                    Node<tempName> new_node;
-                    new_node.name = s1;
-                    nodeList[n] = new_node;
-                    pos = n;
-                    n++;
-                }
-                cout<<"Enter the number of adjascent nodes to "<<s1<<" : ";
-                cin>>numAdj;
-                cout<<"Enter the adjascent nodes one by one : "<<endl;
-                for(j=0;j<numAdj;j++)
-                {
-                    cin>>s2;
-                    if(s2!=s1)
-                    {
-                        nodeList[pos].insertAdjascentNode(s2);
-                        flag2 = false;
-                        for(int k=0;k<n;k++)
-                        {
-                            if(nodeList[k].name == s2)
-                            {
-                                flag2 = true;
-                            }
-                        }
-                        if(flag2 == false)
-                        {
-                            Node<tempName> new_node;
-                            new_node.name = s2;
-                            nodeList[n] = new_node;
-                            n++;
-                        }
                     }
                 }
             }
@@ -165,11 +107,11 @@ class Graph
                 {
                     if(j < nodeList[i].n-1)
                     {
-                        cout<<nodeList[i].adj[j]<<", ";
+                        cout<<"("<<nodeList[i].adj[j]<<", "<<nodeList[i].weights[j]<<"), ";
                     }
                     else
                     {
-                        cout<<nodeList[i].adj[j];
+                        cout<<"("<<nodeList[i].adj[j]<<", "<<nodeList[i].weights[j]<<")";
                     }
                 }
                 cout<<endl;
@@ -181,24 +123,11 @@ int main()
 {
     typedef int tempName;
     Graph<tempName> graph;
-    int cho;
     cout<<"-------------------------------------------------------------------------------------------------"<<endl;
     cout<<"Welcome"<<endl;
     cout<<"-------------------------------------------------------------------------------------------------"<<endl;
-    cout<<"Make a choice : "<<endl;;
-    cout<<"Enter 1 to insert by edges. \nEnter 2 to insert by adjascency list."<<endl;
-    cout<<"Enter your choice : ";
-    cin>>cho;
     
-    switch(cho)
-    {
-        case 1 :
-            graph.getInputByEdges();
-            break;
-        case 2 :
-            graph.getInputByAdjacency();
-            break;
-    }
+    graph.getInputByEdges();
 
     cout<<"-------------------------------------------------------------------------------------------------"<<endl;
     graph.printGraph();
