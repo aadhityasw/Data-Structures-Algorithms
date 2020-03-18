@@ -43,7 +43,7 @@ class Stack
                 temp ele;
                 ele = start->data;
                 start = start->next;
-                cout<<"The talen element is : "<<ele<<endl; 
+                cout<<"The taken element is : "<<ele<<endl; 
             }
             
         }
