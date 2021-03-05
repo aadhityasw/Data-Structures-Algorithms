@@ -1,0 +1,11 @@
+.DS_Store
+
+*/.ipynb_checkpoints
+*/*.out
+*/*.class
+*/.DS_Store
+
+*/*/.ipynb_checkpoints
+*/*/*.out
+*/*/*.class
+*/*/.DS_Store
