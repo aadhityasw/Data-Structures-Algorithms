@@ -20,3 +20,19 @@ n = len(arr)
 for i in range(n, -1, -1) :
     max_heapify(arr, i)
 print(arr)
+
+
+
+
+class MinHeap :
+
+    def __init__(self, capacity=0) :
+        """
+        Initializes the Heap.
+        """
+
+        self.heap = []
+        self.heap_size = []
+        self.capacity = capacity
+
+    
