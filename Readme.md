@@ -68,6 +68,7 @@ This repository explores through the world of Data Structures and a few standard
 
 
 
+
 ### [Algorithms](./Algorithms)
 
 1. [Searching Algorithms](./Algorithms/Searching)
@@ -101,3 +102,16 @@ This repository explores through the world of Data Structures and a few standard
 6. [Peak Finder](./Algorithms/PeakFinder.ipynb)
 
 7. [Rabin Karp](./Algorithms/Pabin-Karp.ipynb)
+
+
+
+
+
+### [Language Based Libraries](./Library-Functions)
+
+In this section, we deal with the library functions which can be used to simplify the implementations of the data structures used above, so as to reduce the programming time, and improve efficiency.
+
+We will also deal with a few library classes and function which simplifies the smaller tasks, which are standard in nature, and need not be implemented from scratch everytime they are needed.
+
+
+#### 1. [Python](./Library-Functions/Python)
